@@ -1,8 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useRouter } from "next/navigation";
 import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -70,9 +70,9 @@ const Login = (props: LoginProps) => {
 
   return (
     <div className="bg-gray-100 flex items-center justify-center h-screen">
-      <div className="bg-gray-500 p-8 rounded shadow-md w-96">
+      <div className="bg-slate-200 p-8 rounded shadow-md w-96">
         <h2 className="text-4xl font-semibold mb-6 text-center text-black-950 uppercase">
-          Menu Mingle Login
+          Smart Menu Login
         </h2>
         <h1 className="text-sm font-semibold mb-6 text-center">
           Please enter your Email & Password
@@ -96,10 +96,10 @@ const Login = (props: LoginProps) => {
                           // onChange={(e) => setEmail(e.target.value)}
                           // onClick={handleInputClick}
                         />
-                        <FontAwesomeIcon
+                        {/* <FontAwesomeIcon
                           icon={faEnvelope}
                           className="absolute left-3 top-3 text-gray-600"
-                        />
+                        /> */}
                       </div>
                     </FormControl>
                     <FormMessage className="text-red-950 font-bold" />
@@ -122,10 +122,10 @@ const Login = (props: LoginProps) => {
                           className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 text-center"
                           {...field}
                         />
-                        <FontAwesomeIcon
+                        {/* <FontAwesomeIcon
                           icon={faLock}
                           className="absolute left-3 top-3 text-gray-600"
-                        />
+                        /> */}
                       </div>
                     </FormControl>
                     <FormMessage className="text-red-950 font-bold" />

@@ -20,10 +20,19 @@ model Todo {
 }
 
 model User {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  email          String    @unique
-  name           String?
-  hashedPassword String?
-  createdAt      DateTime  @default(now())
-  emailVerified  DateTime?
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  firstName      String
+  lastName       String
+  email          String   @unique
+  contactNo      String
+  userName       String   @unique
+  hashedPassword String
+  createdAt      DateTime @default(now())
+  emailVerified  DateTime
+  role           Role     @default(OWNER)
+}
+
+enum Role {
+  ADMIN
+  OWNER
 }
