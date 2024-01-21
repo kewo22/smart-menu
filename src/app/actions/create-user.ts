@@ -3,6 +3,7 @@
 import { db } from "@/_lib/db";
 import { CreateUserValidatePayload } from "../create-user/_components/form";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { logger } from "../../../logger";
 
 export default async function createUser(user: CreateUserValidatePayload) {
     const userObj = {
@@ -14,19 +15,18 @@ export default async function createUser(user: CreateUserValidatePayload) {
         const user = await db.user.create({
             data: userObj
         })
-        console.log("🚀 ~ createUser ~ user:", user)
-        return { message: `Added todo` };
+        return { message: `User Added` };
     } catch (e) {
         if (e instanceof PrismaClientKnownRequestError) {
-            // The .code property can be accessed in a type-safe manner
-            if (e.code === 'P2002') {
-                console.log("🚀 ~ createUser ~ e:", e)
-                console.log(
-                    'There is a unique constraint violation, a new user cannot be created with this email'
-                )
-            }
+            logger.error(JSON.stringify(e));
+            // if (e.code === 'P2002') {
+            //     console.log("🚀 ~ createUser ~ e:", e)
+            //     console.log(
+            //         'There is a unique constraint violation, a new user cannot be created with this email'
+            //     )
+            // }
         }
         // throw e
-        return { error: "Failed to create todo" };
+        return { error: "Failed to create user" };
     }
 }

@@ -58,13 +58,13 @@ export default function CreateUserForm() {
   const onSubmit = async (values: z.infer<typeof CreateUserSchema>) => {
     const res = await createUser(values);
     console.log("🚀 ~ onSubmit ~ res:", res)
-    if (res) {
+    if (res.error) {
       toast({
         className: cn(
           "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
         ),
-        title: "Error",
-        description: "Error from server",
+        title: "Error from server",
+        description: res.error,
         variant: "destructive",
       });
     } else {
