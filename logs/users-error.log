@@ -2,3 +2,4 @@
 {"level":"error","message":"e","timestamp":"2024-01-21T17:47:22.892Z"}
 {"clientVersion":"5.8.1","code":"P2002","level":"error","meta":{"modelName":"User","target":"User_email_key"},"name":"PrismaClientKnownRequestError","timestamp":"2024-01-21T17:47:58.964Z"}
 {"level":"error","message":"{\"name\":\"PrismaClientKnownRequestError\",\"code\":\"P2002\",\"clientVersion\":\"5.8.1\",\"meta\":{\"modelName\":\"User\",\"target\":\"User_email_key\"}}","timestamp":"2024-01-21T17:48:40.086Z"}
+{"level":"error","message":"{\"name\":\"PrismaClientKnownRequestError\",\"code\":\"P2002\",\"clientVersion\":\"5.8.1\",\"meta\":{\"modelName\":\"User\",\"target\":\"User_email_key\"}}","timestamp":"2024-01-21T17:49:11.241Z"}
