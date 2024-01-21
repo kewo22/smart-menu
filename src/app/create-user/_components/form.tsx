@@ -33,6 +33,8 @@ const CreateUserSchema = z.object({
 
 export type CreateUserValidatePayload = z.infer<typeof CreateUserSchema>;
 
+const x = (count: number) => Math.floor(Math.random() * count);
+
 export default function CreateUserForm() {
   const { toast } = useToast();
 
@@ -55,16 +57,29 @@ export default function CreateUserForm() {
 
   const onSubmit = async (values: z.infer<typeof CreateUserSchema>) => {
     const res = await createUser(values);
-    console.log(res);
-    toast({
-      className: cn(
-        "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
-      ),
-      title: "Error",
-      description: "Error from server",
-      variant: "destructive",
-    });
+    console.log("🚀 ~ onSubmit ~ res:", res)
+    if (res) {
+      toast({
+        className: cn(
+          "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
+        ),
+        title: "Error",
+        description: "Error from server",
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        className: cn(
+          "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-green-500"
+        ),
+        title: "Success",
+        description: "User created",
+        variant: "default",
+      });
+    }
   };
+  //   const r = x(2);
+  //   if (r === 1) throw new Error("wqdwqdwqd");
 
   return (
     <Form {...form}>
