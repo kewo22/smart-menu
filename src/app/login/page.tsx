@@ -29,6 +29,10 @@ type LoginProps = {
 
 const Login = (props: LoginProps) => {
   console.log("🚀 ~ file: page.tsx:25 ~ Login ~ props:", props);
+  console.log(
+    "---------------------------------->",
+    process.env.NEXTAUTH_SECRET
+  );
   const router = useRouter();
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
@@ -53,6 +57,7 @@ const Login = (props: LoginProps) => {
 
   const onSubmit = async (values: z.infer<typeof signUpSchema>) => {
     console.log("🚀 ~ file: page.tsx:46 ~ onSubmit ~ values:", values);
+
     // router.push('menu');
 
     await signIn("credentials", {

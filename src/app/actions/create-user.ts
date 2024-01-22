@@ -4,13 +4,22 @@ import { db } from "@/_lib/db";
 import { CreateUserValidatePayload } from "../create-user/_components/form";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { logger } from "../../../logger";
+import bcrypt from 'bcrypt'
 
 export default async function createUser(user: CreateUserValidatePayload) {
+
+    const saltRounds = 10;
+    const myPlaintextPassword = user.userName + Date.now();
+
+    const salt = bcrypt.genSaltSync(saltRounds);
+    const hash = bcrypt.hashSync('pass', salt);
+
     const userObj = {
         ...user,
-        hashedPassword: "wdwq",
+        hashedPassword: hash,
         emailVerified: new Date()
     }
+
     try {
         const user = await db.user.create({
             data: userObj
