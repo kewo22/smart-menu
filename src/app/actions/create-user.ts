@@ -3,7 +3,7 @@
 import { db } from "@/_lib/db";
 import { CreateUserValidatePayload } from "../create-user/_components/form";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { logger } from "../../../logger";
+// import { logger } from "../../../logger";
 import bcrypt from 'bcrypt'
 
 export default async function createUser(user: CreateUserValidatePayload) {
@@ -27,7 +27,7 @@ export default async function createUser(user: CreateUserValidatePayload) {
         return { message: `User Added` };
     } catch (e) {
         if (e instanceof PrismaClientKnownRequestError) {
-            logger.error(JSON.stringify(e));
+            // logger.error(JSON.stringify(e));
             // if (e.code === 'P2002') {
             //     console.log("🚀 ~ createUser ~ e:", e)
             //     console.log(

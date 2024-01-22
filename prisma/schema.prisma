@@ -20,19 +20,28 @@ model Todo {
 }
 
 model User {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
   firstName      String
   lastName       String
-  email          String   @unique
+  email          String       @unique
   contactNo      String
-  userName       String   @unique
+  userName       String       @unique
   hashedPassword String
-  createdAt      DateTime @default(now())
+  createdAt      DateTime     @default(now())
   emailVerified  DateTime
-  role           Role     @default(OWNER)
+  role           Role         @default(OWNER)
+  restaurant     Restaurant[]
 }
 
 enum Role {
   ADMIN
   OWNER
+}
+
+model Restaurant {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  address String
+  userId  String @db.ObjectId
+  user    User   @relation(fields: [userId], references: [id])
 }

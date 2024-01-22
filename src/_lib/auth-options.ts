@@ -7,7 +7,6 @@ import { db } from '@/_lib/db';
 import CredentialsProvider from "next-auth/providers/credentials";
 import { AUTH_ERROR } from '@/_lib/constants/auth-error';
 
-console.log(process.env.NEXTAUTH_SECRET)
 export const authOptions: AuthOptions = {
     adapter: PrismaAdapter(db),
     providers: [
@@ -29,6 +28,9 @@ export const authOptions: AuthOptions = {
                     const user = await db.user.findFirstOrThrow({
                         where: {
                             email: credentials.email
+                        },
+                        include: {
+                            restaurant: true
                         }
                     });
                     if (!user || !user?.hashedPassword) {

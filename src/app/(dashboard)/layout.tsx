@@ -21,17 +21,17 @@ export default async function RootLayout({
   const session = await getServerSession();
 
   return (
-    <html lang="en">
-      <body className={`${inter.className}`}>
-        <SessionProvider session={session}>
-          <div className="flex flex-row bg-slate-200 h-screen overflow-hidden p-5 gap-5">
-            <SideMenu />
-            <main className="flex-grow bg-white rounded-lg shadow-xl p-5">
-              {children}
-            </main>
-          </div>
-        </SessionProvider>
-      </body>
-    </html>
+    // <html lang="en">
+    // <body className={`${inter.className}`}>
+    <SessionProvider session={session}>
+      <div className="flex flex-row bg-slate-200 h-screen overflow-hidden p-5 gap-5">
+        <SideMenu />
+        <main className="flex-grow bg-white rounded-lg shadow-xl p-5">
+          {children}
+        </main>
+      </div>
+    </SessionProvider>
+    // </body>
+    // </html>
   );
 }
