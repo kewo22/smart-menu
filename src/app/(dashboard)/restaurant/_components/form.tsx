@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Form,
   FormControl,
@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import * as z from "zod";
-import type { Restaurant } from '@prisma/client'
+import type { Restaurant } from "@prisma/client";
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -28,24 +28,31 @@ const RestaurantSchema = z.object({
 export type RestaurantValidatePayload = z.infer<typeof RestaurantSchema>;
 
 type CreateRestaurantFormProps = {
+  formData?: Restaurant | null;
   onRestaurantCreated: (restaurant: Restaurant) => void;
 };
 
 export default function CreateRestaurantForm(props: CreateRestaurantFormProps) {
-  const { onRestaurantCreated } = props;
+  const { formData, onRestaurantCreated } = props;
   const { toast } = useToast();
 
   const form = useForm<RestaurantValidatePayload>({
     resolver: zodResolver(RestaurantSchema),
     defaultValues: {
-      name: "",
-      address: "",
+      name: formData?.name || "",
+      address: formData?.address || "",
     },
   });
 
+  useEffect(() => {
+    if (formData) {
+      form.setValue("name", formData.name);
+      form.setValue("address", formData.address);
+    }
+  }, [formData, form]);
+
   const onSubmit = async (values: z.infer<typeof RestaurantSchema>) => {
     const res = await CreateRestaurant(values);
-    console.log("🚀 ~ onSubmit ~ res:", res);
     if (res.error) {
       toast({
         className: cn(
@@ -57,6 +64,7 @@ export default function CreateRestaurantForm(props: CreateRestaurantFormProps) {
       });
     } else {
       onRestaurantCreated(res.restaurant as Restaurant);
+      form.reset();
       toast({
         className: cn(
           "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-green-500"
@@ -102,7 +110,7 @@ export default function CreateRestaurantForm(props: CreateRestaurantFormProps) {
             </FormItem>
           )}
         />
-        <SubmitBtn />
+        <SubmitBtn btnText="Add Restaurant" />
       </form>
     </Form>
   );

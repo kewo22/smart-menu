@@ -17,6 +17,9 @@ export default function Page() {
   const [restaurantsData, setRestaurantsData] = useState<Restaurant[]>(
     data || []
   );
+  const [restaurantToEdit, setRestaurantToEdit] = useState<Restaurant | null>(
+    null
+  );
 
   useEffect(() => {
     if (data) setRestaurantsData(data);
@@ -30,15 +33,23 @@ export default function Page() {
     });
   };
 
+  const onEditClick = (row: Restaurant) => {
+    setRestaurantToEdit(row);
+  };
+
   return (
     <div className="flex flex-col gap-10">
       <h1 className="text-2xl">Manage Restaurant</h1>
       <div className="w-full flex flex-row gap-5">
         <div className="flex-grow">
-          <Restaurants data={restaurantsData} isLoading={isLoading} />
+          <Restaurants
+            data={restaurantsData}
+            isLoading={isLoading}
+            onEditRow={onEditClick}
+          />
         </div>
         <div className="flex-[0_0_30%]">
-          <Form onRestaurantCreated={onRestaurantCreated} />
+          <Form onRestaurantCreated={onRestaurantCreated} formData={restaurantToEdit} />
         </div>
       </div>
     </div>

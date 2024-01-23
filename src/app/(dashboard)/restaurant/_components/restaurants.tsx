@@ -1,11 +1,9 @@
 "use client";
-
 import * as React from "react";
-import {
-  CaretSortIcon,
-  ChevronDownIcon,
-  DotsHorizontalIcon,
-} from "@radix-ui/react-icons";
+
+import type { Restaurant } from "@prisma/client";
+
+import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -28,29 +26,16 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-export const columns: ColumnDef<any>[] = [
-  {
-    accessorKey: "name",
-    header: "Name",
-    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
-  },
-  {
-    accessorKey: "address",
-    header: "Address",
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue("address")}</div>
-    ),
-  },
-];
+import { Button } from "@/components/ui/button";
 
 type RestaurantsProps = {
   data: any;
   isLoading: boolean;
+  onEditRow: (row: Restaurant) => void;
 };
 
 export default function Restaurants(props: RestaurantsProps) {
-  const { data, isLoading } = props;
+  const { data, isLoading, onEditRow } = props;
 
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -60,7 +45,54 @@ export default function Restaurants(props: RestaurantsProps) {
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const table = useReactTable({
+  const columns: ColumnDef<Restaurant>[] = [
+    {
+      accessorKey: "name",
+      header: "Name",
+      cell: ({ row }) => (
+        <div className="capitalize w-28">{row.getValue("name")}</div>
+      ),
+    },
+    {
+      accessorKey: "address",
+      header: "Address",
+      cell: ({ row }) => (
+        <div className="capitalize w-64">{row.getValue("address")}</div>
+      ),
+    },
+    {
+      id: "actions",
+      enableHiding: false,
+      cell: ({ row }) => {
+        return (
+          <div className="w-13 flex flex-row justify-end">
+            <Button
+              variant="ghost"
+              className="h-8 w-8 p-0"
+              onClick={() =>
+                (table?.options?.meta as any).handleEditRow(row.original)
+              }
+            >
+              <span className="sr-only">Edit Restaurant</span>
+              <Pencil1Icon className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              className="h-8 w-8 p-0"
+              onClick={() =>
+                (table?.options?.meta as any).handleDeleteRow(row.original)
+              }
+            >
+              <span className="sr-only">Delete Restaurant</span>
+              <TrashIcon className="h-4 w-4" />
+            </Button>
+          </div>
+        );
+      },
+    },
+  ];
+
+  const table = useReactTable<Restaurant>({
     data: data || [],
     columns,
     onSortingChange: setSorting,
@@ -77,25 +109,25 @@ export default function Restaurants(props: RestaurantsProps) {
       columnVisibility,
       rowSelection,
     },
+    meta: {
+      handleEditRow: (row: Restaurant) => handleEditRow(row),
+      handleDeleteRow: (row: Restaurant) => handleDeleteRow(row),
+    },
   });
+
+  const handleEditRow = (row: Restaurant) => {
+    onEditRow(row);
+  };
+
+  const handleDeleteRow = (row: Restaurant) => {
+    onEditRow(row);
+  };
 
   return (
     <div className="w-full">
       {isLoading && "Loading"}
       {!isLoading && (
         <>
-          <div className="flex items-center">
-            {/* <Input
-              placeholder="Filter emails..."
-              value={
-                (table.getColumn("email")?.getFilterValue() as string) ?? ""
-              }
-              onChange={(event) =>
-                table.getColumn("email")?.setFilterValue(event.target.value)
-              }
-              className="max-w-sm"
-            /> */}
-          </div>
           <div className="rounded-md border">
             <Table>
               <TableHeader>
@@ -139,7 +171,7 @@ export default function Restaurants(props: RestaurantsProps) {
                       colSpan={columns.length}
                       className="h-24 text-center"
                     >
-                      No results.
+                      No Restaurants Added.
                     </TableCell>
                   </TableRow>
                 )}
