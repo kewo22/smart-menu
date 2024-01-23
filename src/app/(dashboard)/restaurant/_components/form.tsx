@@ -18,7 +18,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitBtn } from "@/app/_components/SubmitBtn";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/_lib/utils";
-import CreateRestaurant from "@/app/actions/create-restaurant";
+import {
+  CreateRestaurant,
+  EditRestaurant,
+} from "@/app/actions/restaurant-actions";
 
 const RestaurantSchema = z.object({
   name: z.string().trim().min(1, { message: "Required" }),
@@ -30,10 +33,11 @@ export type RestaurantValidatePayload = z.infer<typeof RestaurantSchema>;
 type CreateRestaurantFormProps = {
   formData?: Restaurant | null;
   onRestaurantCreated: (restaurant: Restaurant) => void;
+  onRestaurantEdited: (restaurant: Restaurant) => void;
 };
 
 export default function CreateRestaurantForm(props: CreateRestaurantFormProps) {
-  const { formData, onRestaurantCreated } = props;
+  const { formData, onRestaurantCreated, onRestaurantEdited } = props;
   const { toast } = useToast();
 
   const form = useForm<RestaurantValidatePayload>({
@@ -52,7 +56,18 @@ export default function CreateRestaurantForm(props: CreateRestaurantFormProps) {
   }, [formData, form]);
 
   const onSubmit = async (values: z.infer<typeof RestaurantSchema>) => {
-    const res = await CreateRestaurant(values);
+    let res = null;
+    if (formData) {
+      const restaurantData: Restaurant = {
+        ...values,
+        id: formData.id,
+        userId: formData.userId,
+      };
+      res = await EditRestaurant(restaurantData);
+    } else {
+      res = await CreateRestaurant(values);
+    }
+
     if (res.error) {
       toast({
         className: cn(
@@ -63,14 +78,18 @@ export default function CreateRestaurantForm(props: CreateRestaurantFormProps) {
         variant: "destructive",
       });
     } else {
-      onRestaurantCreated(res.restaurant as Restaurant);
+      if (formData) {
+        onRestaurantEdited(res.restaurant as Restaurant);
+      } else {
+        onRestaurantCreated(res.restaurant as Restaurant);
+      }
       form.reset();
       toast({
         className: cn(
-          "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-green-500"
+          "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-green-500 text-white"
         ),
         title: "Success",
-        description: "Restaurant created",
+        description: formData ? "Restaurant edited" : "Restaurant created",
         variant: "default",
       });
     }
