@@ -10,8 +10,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import createUser from "@/app/actions/create-user";
 import * as z from "zod";
+import type { Restaurant } from '@prisma/client'
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -27,9 +27,12 @@ const RestaurantSchema = z.object({
 
 export type RestaurantValidatePayload = z.infer<typeof RestaurantSchema>;
 
-const x = (count: number) => Math.floor(Math.random() * count);
+type CreateRestaurantFormProps = {
+  onRestaurantCreated: (restaurant: Restaurant) => void;
+};
 
-export default function CreateRestaurantForm() {
+export default function CreateRestaurantForm(props: CreateRestaurantFormProps) {
+  const { onRestaurantCreated } = props;
   const { toast } = useToast();
 
   const form = useForm<RestaurantValidatePayload>({
@@ -53,23 +56,21 @@ export default function CreateRestaurantForm() {
         variant: "destructive",
       });
     } else {
+      onRestaurantCreated(res.restaurant as Restaurant);
       toast({
         className: cn(
           "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-green-500"
         ),
         title: "Success",
-        description: "User created",
+        description: "Restaurant created",
         variant: "default",
       });
     }
   };
-  //   const r = x(2);
-  //   if (r === 1) throw new Error("wqdwqdwqd");
 
   return (
     <Form {...form}>
       <form
-        // action={createUserClientAction}
         onSubmit={form.handleSubmit(onSubmit)}
         className="flex flex-col gap-5"
       >

@@ -21,7 +21,8 @@ export default async function CreateRestaurant(restaurant: RestaurantValidatePay
         const restaurant = await db.restaurant.create({
             data: restaurantObj
         })
-        return { message: `Restaurant Added` };
+        console.log("🚀 ~ CreateRestaurant ~ restaurant:", restaurant)
+        return { message: `Restaurant Added`, restaurant };
     } catch (e) {
         if (e instanceof PrismaClientKnownRequestError) {
             // logger.error(JSON.stringify(e));
