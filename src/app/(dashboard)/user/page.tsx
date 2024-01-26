@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { authOptions } from "@/_lib/auth-options";
 import { CheckCircledIcon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
+import ResetPasswordForm from "./reset-password-form";
 
 export default async function Page() {
   const session = await getServerSession(authOptions);
@@ -61,6 +62,18 @@ export default async function Page() {
             <CheckCircledIcon className="h-8 w-8 text-green-500" />
           </div>
         )}
+      </div>
+
+      <div>
+        <div className="bg-slate-100 h-fit p-10 rounded-lg w-fit drop-shadow-lg flex flex-col gap-5 min-w-[783px]">
+          <div>
+            <span className="block font-bold">Reset Password</span>
+            <span className="block">
+              Validate current password to change password
+            </span>
+          </div>
+          <ResetPasswordForm />
+        </div>
       </div>
     </div>
   );
