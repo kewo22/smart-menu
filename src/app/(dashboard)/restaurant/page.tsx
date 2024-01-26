@@ -49,18 +49,26 @@ export default function Page() {
       restaurantCopy.splice(index, 1, restaurant);
     }
     setRestaurantsData(restaurantCopy);
-    setRestaurantToEdit(null)
+    setRestaurantToEdit(null);
   };
-  const onDeleteSuccess = (restaurant: Restaurant) => {
-    const restaurantCopy = [...restaurantsData];
-    const index = restaurantsData.findIndex((r) => {
-      return r.id === restaurant.id;
-    });
-    if (index > -1) {
-      restaurantCopy.splice(index, 1);
-    }
-    setRestaurantsData(restaurantCopy);
-  };
+
+  const onDeleteSuccess = useCallback(
+    (restaurant: Restaurant) => {
+      const restaurantCopy = [...restaurantsData];
+      const index = restaurantsData.findIndex((r) => {
+        return r.id === restaurant.id;
+      });
+      if (index > -1) {
+        restaurantCopy.splice(index, 1);
+      }
+      setRestaurantsData(restaurantCopy);
+    },
+    [restaurantsData]
+  );
+
+  const onResetRestaurantForm = useCallback(() => {
+    setRestaurantToEdit(null);
+  }, []);
 
   return (
     <div className="flex flex-col gap-10">
@@ -78,6 +86,7 @@ export default function Page() {
           <Form
             onRestaurantCreated={onRestaurantCreated}
             onRestaurantEdited={onRestaurantEdited}
+            onResetRestaurantForm={onResetRestaurantForm}
             formData={restaurantToEdit}
           />
         </div>

@@ -39,6 +39,7 @@ import {
 } from "@/components/ui/dialog";
 import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/_lib/utils";
+import Image from "next/image";
 
 type RestaurantsProps = {
   data: any;
@@ -47,7 +48,7 @@ type RestaurantsProps = {
   onDeleteSuccess: (row: Restaurant) => void;
 };
 
-export default function Restaurants(props: RestaurantsProps) {
+const Restaurants = (props: RestaurantsProps) => {
   const { data, isLoading, onEditRow, onDeleteSuccess } = props;
 
   const { toast } = useToast();
@@ -65,6 +66,22 @@ export default function Restaurants(props: RestaurantsProps) {
   const restaurantToDeleteRef = useRef<Restaurant | null>(null);
 
   const columns: ColumnDef<Restaurant>[] = [
+    {
+      accessorKey: "logo",
+      header: "Logo",
+      cell: ({ row }) => (
+        <div className="">
+          <Image
+            src={row.getValue("logo")}
+            alt="logo"
+            priority
+            height={50}
+            width={50}
+            className="rounded-full"
+          />
+        </div>
+      ),
+    },
     {
       accessorKey: "name",
       header: "Name",
@@ -264,4 +281,6 @@ export default function Restaurants(props: RestaurantsProps) {
       )}
     </div>
   );
-}
+};
+
+export default React.memo(Restaurants);

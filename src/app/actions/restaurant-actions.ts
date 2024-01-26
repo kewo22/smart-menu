@@ -1,20 +1,23 @@
 'use server';
 import { getServerSession } from "next-auth";
+import { put, PutBlobResult } from '@vercel/blob';
 
 import type { Restaurant } from "@prisma/client";
 
 // import { logger } from "../../../logger";
 import { db } from "@/_lib/db";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { RestaurantValidatePayload } from "../(dashboard)/restaurant/_components/form";
 import { authOptions } from "@/_lib/auth-options";
+import { revalidatePath } from "next/cache";
+import { RestaurantCreate } from "../(dashboard)/restaurant/_components/form";
 
-export async function CreateRestaurant(restaurant: RestaurantValidatePayload) {
+export async function CreateRestaurant(restaurant: RestaurantCreate) {
     const session = await getServerSession(authOptions);
     const restaurantObj = {
         name: restaurant.name,
         address: restaurant.address,
-        userId: (session?.user as any).id
+        userId: (session?.user as any).id,
+        logo: restaurant.logoUrl
     };
 
     try {
@@ -90,5 +93,17 @@ export async function EditRestaurant(data: Restaurant) {
         }
         // throw e
         return { error: "Failed to delete restaurant" };
+    }
+}
+
+export async function UploadLogo(formData: any): Promise<PutBlobResult | { error: string }> {
+    try {
+        const logoFile = formData.get('logo') as File;
+        const blob: PutBlobResult = await put(logoFile.name, logoFile, {
+            access: 'public',
+        });
+        return blob;
+    } catch (e) {
+        return { error: "Failed to upload logo" };
     }
 }
