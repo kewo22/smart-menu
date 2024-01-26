@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
+import Link from 'next/link'
 import { signOut } from "next-auth/react";
 
 export default function Page() {
@@ -18,10 +19,10 @@ export default function Page() {
           alt="brand"
           className="mx-auto my-10"
         />
-        <ul className="">
-          <li>Dashboard</li>
-          <li>Menu</li>
-          <li>Restaurant</li>
+        <ul className="flex flex-col">
+          <Link href="/">Dashboard</Link>
+          <Link href="/menu">Menu</Link>
+          <Link href="/restaurant">Restaurant</Link>
         </ul>
         <ul className="mt-auto">
           <li>User</li>
