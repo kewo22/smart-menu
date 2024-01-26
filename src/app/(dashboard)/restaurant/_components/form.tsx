@@ -37,16 +37,16 @@ const RestaurantSchema = z.object({
     .custom<FileList>((val) => val instanceof FileList, "Required")
     // .refine((files) => files.length > 0, `Required`)
     // .refine((files) => files.length <= 5, `Maximum of 5 images are allowed.`)
-    .refine((files) => {
-      return Array.from(files).every((file) => file.size <= MAX_FILE_SIZE);
-    }, `Each file size should be less than 4 MB.`)
     .refine(
       (files) =>
         Array.from(files).every((file) =>
           ACCEPTED_IMAGE_TYPES.includes(file.type)
         ),
       "Only these types are allowed .jpg, .jpeg, .png"
-    ),
+    )
+    .refine((files) => {
+      return Array.from(files).every((file) => file.size <= MAX_FILE_SIZE);
+    }, `Each file size should be less than 4 MB.`),
 });
 
 export type RestaurantValidatePayload = z.infer<typeof RestaurantSchema>;
@@ -140,6 +140,9 @@ export default function CreateRestaurantForm(props: CreateRestaurantFormProps) {
           }
           form.reset();
           setLogoPreview("/placeholder-image.jpg");
+          const dataTransfer = new DataTransfer();
+          const newFile = dataTransfer.files;
+          form.setValue("logo", newFile);
           toast({
             className: cn(
               "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4 bg-green-500 text-white"
@@ -156,7 +159,7 @@ export default function CreateRestaurantForm(props: CreateRestaurantFormProps) {
           "top-0 right-0 flex fixed md:max-w-[420px] md:top-4 md:right-4"
         ),
         title: "Error from server",
-        description: 'Operation failed, Please contact the developer',
+        description: "Operation failed, Please contact the developer",
         variant: "destructive",
       });
     }
@@ -165,7 +168,8 @@ export default function CreateRestaurantForm(props: CreateRestaurantFormProps) {
   const onResetClick = () => {
     submitBtnTextRef.current = "Add Restaurant";
     form.reset();
-    setLogoPreview('/placeholder-image.jpg');
+    form.setValue("logo", undefined as any);
+    setLogoPreview("/placeholder-image.jpg");
     onResetRestaurantForm();
   };
 
@@ -173,7 +177,7 @@ export default function CreateRestaurantForm(props: CreateRestaurantFormProps) {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-5"
+        className="flex flex-col gap-5 px-2"
       >
         <FormField
           control={form.control}
@@ -239,7 +243,7 @@ export default function CreateRestaurantForm(props: CreateRestaurantFormProps) {
           priority
           height={100}
           width={100}
-          className="border border-dashed border-slate-500 w-full p-1"
+          className="border border-dashed border-slate-500 w-full p-1 rounded"
         />
         <SubmitBtn btnText={submitBtnTextRef.current} />
         {formData && (

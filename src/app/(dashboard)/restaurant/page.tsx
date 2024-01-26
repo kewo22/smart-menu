@@ -74,7 +74,7 @@ export default function Page() {
     <div className="flex flex-col gap-10 h-full overflow-hidden">
       <h1 className="text-2xl">Manage Restaurant</h1>
       <div className="w-full flex flex-row gap-5 h-full overflow-hidden">
-        <div className="flex-grow">
+        <div className="flex-grow h-full overflow-auto">
           <Restaurants
             data={restaurantsData}
             isLoading={isLoading}
