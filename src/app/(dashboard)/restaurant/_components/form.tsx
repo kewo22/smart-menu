@@ -89,6 +89,7 @@ export default function CreateRestaurantForm(props: CreateRestaurantFormProps) {
       const newFile = dataTransfer.files;
       form.setValue("logo", newFile);
       setLogoPreview(formData.logo);
+      // RestaurantSchema.safeParse(form.getValues())
     }
   }, [formData, form]);
 
@@ -164,6 +165,7 @@ export default function CreateRestaurantForm(props: CreateRestaurantFormProps) {
   const onResetClick = () => {
     submitBtnTextRef.current = "Add Restaurant";
     form.reset();
+    setLogoPreview('/placeholder-image.jpg');
     onResetRestaurantForm();
   };
 
@@ -235,8 +237,8 @@ export default function CreateRestaurantForm(props: CreateRestaurantFormProps) {
           alt=""
           id="preview-image"
           priority
-          height={200}
-          width={200}
+          height={100}
+          width={100}
           className="border border-dashed border-slate-500 w-full p-1"
         />
         <SubmitBtn btnText={submitBtnTextRef.current} />

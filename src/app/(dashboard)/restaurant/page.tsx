@@ -71,9 +71,9 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-10 h-full overflow-hidden">
       <h1 className="text-2xl">Manage Restaurant</h1>
-      <div className="w-full flex flex-row gap-5">
+      <div className="w-full flex flex-row gap-5 h-full overflow-hidden">
         <div className="flex-grow">
           <Restaurants
             data={restaurantsData}
@@ -82,7 +82,7 @@ export default function Page() {
             onDeleteSuccess={onDeleteSuccess}
           />
         </div>
-        <div className="flex-[0_0_30%]">
+        <div className="flex-[0_0_30%] h-full overflow-auto">
           <Form
             onRestaurantCreated={onRestaurantCreated}
             onRestaurantEdited={onRestaurantEdited}
