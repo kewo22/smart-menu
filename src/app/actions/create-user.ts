@@ -17,7 +17,7 @@ export default async function createUser(user: CreateUserValidatePayload) {
     const userObj = {
         ...user,
         hashedPassword: hash,
-        emailVerified: new Date()
+        emailVerified: false
     }
 
     try {

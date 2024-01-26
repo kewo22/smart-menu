@@ -25,7 +25,7 @@ export default function Page() {
           <Link href="/restaurant">Restaurant</Link>
         </ul>
         <ul className="mt-auto">
-          <li>User</li>
+        <Link href="/user">User</Link>
           <li>
             <button onClick={onLogOut}>Logout</button>
           </li>
