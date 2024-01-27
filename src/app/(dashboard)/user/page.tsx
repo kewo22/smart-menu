@@ -34,10 +34,6 @@ export default async function Page() {
           <span className="block">Email</span>
           <span className="font-bold">
             {(session.user as any).email}
-
-            {/* {!!(session.user as any).emailVerified === false && (
-              <CheckCircledIcon className="h-4 w-4" />
-            )} */}
           </span>
         </div>
         <div>

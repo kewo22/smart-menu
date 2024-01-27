@@ -7,7 +7,6 @@ import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import bcrypt from 'bcrypt'
 
 export default async function createUser(user: CreateUserValidatePayload) {
-
     const saltRounds = 10;
     const myPlaintextPassword = user.userName + Date.now();
 

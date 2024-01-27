@@ -1,9 +1,10 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import * as z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import useSWRMutation from "swr/mutation";
 
 import {
   Form,
@@ -17,6 +18,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { SubmitBtn } from "@/app/_components/SubmitBtn";
 import { Button } from "@/components/ui/button";
+import { Fetcher, sendRequest } from "@/_lib/utils";
 
 const ResetPasswordSchema = z.object({
   password: z.string(),
@@ -26,6 +28,15 @@ const ResetPasswordSchema = z.object({
 export type ResetPasswordPayload = z.infer<typeof ResetPasswordSchema>;
 
 export default function ResetPasswordForm() {
+  // const { mutate } = useSWR("/api/verify-password", Fetcher);
+
+  const { trigger, isMutating } = useSWRMutation(
+    "/api/verify-password",
+    sendRequest /* options */
+  );
+
+  const currentPassRef = useRef("");
+
   const form = useForm<ResetPasswordPayload>({
     resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
@@ -39,11 +50,24 @@ export default function ResetPasswordForm() {
     console.log("🚀 ~ onSubmit ~ values:", values);
   };
 
+  const onValidateClick = async () => {
+    const result = await trigger({ pass: 'hash' } /* options */);
+    console.log("🚀 ~ onValidateClick ~ result:", result);
+  };
+
   return (
     <div>
       <div className="flex flex-row gap-5 mb-5">
-        <Input type="text" placeholder="Enter Current Password" />
-        <Button variant="default">Validate</Button>
+        <Input
+          type="text"
+          placeholder="Enter Current Password"
+          onChange={(e) => {
+            currentPassRef.current = e.target.value;
+          }}
+        />
+        <Button variant="default" onClick={onValidateClick}>
+          Validate
+        </Button>
       </div>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col">
