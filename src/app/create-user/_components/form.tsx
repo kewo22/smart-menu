@@ -10,7 +10,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import createUser from "@/app/actions/create-user";
+import { createUser } from "@/app/actions/create-user";
 import * as z from "zod";
 
 import { useForm } from "react-hook-form";
@@ -57,7 +57,7 @@ export default function CreateUserForm() {
 
   const onSubmit = async (values: z.infer<typeof CreateUserSchema>) => {
     const res = await createUser(values);
-    console.log("🚀 ~ onSubmit ~ res:", res)
+    console.log("🚀 ~ onSubmit ~ res:", res);
     if (res.error) {
       toast({
         className: cn(

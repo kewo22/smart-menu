@@ -54,7 +54,6 @@ export default async function Page() {
         )}
         {(session.user as any).emailVerified && (
           <div className="flex flex-row items-center justify-between gap-5">
-            <span className="block">Email Verified</span> &nbsp;
             <CheckCircledIcon className="h-8 w-8 text-green-500" />
           </div>
         )}

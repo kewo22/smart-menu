@@ -7,7 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export const Fetcher = (url: string) => fetch(url).then((res) => res.json());
 
-export async function sendRequest(url: string, { arg }: { arg: any }) {
+export async function SendRequest(url: string, { arg }: { arg: any }) {
   return fetch(url, {
     method: 'POST',
     body: JSON.stringify(arg)
