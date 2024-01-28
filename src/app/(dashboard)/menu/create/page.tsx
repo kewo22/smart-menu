@@ -10,7 +10,7 @@ export default function Page() {
   ];
 
   return (
-    <div className="h-full overflow-hidden flex flex-col">
+    <div className="h-full overflow-hidden flex flex-col gap-5">
       <h2 className="flex items-center text-lg">
         <span>Create Menu</span>
         <ChevronRightIcon className="h-5 2-5" />
