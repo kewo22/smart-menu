@@ -160,7 +160,7 @@ export default function ResetPasswordForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-row gap-5"
+          className="flex flex-row gap-10"
         >
           <div className="flex flex-col gap-5 flex-grow">
             <FormField

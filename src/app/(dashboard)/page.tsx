@@ -3,8 +3,7 @@ import { redirect } from "next/navigation";
 import React from "react";
 
 export default async function Dashboard() {
-  const session = await getServerSession();
-  console.log("🚀 ~ Page ~ session:", session)
+  const session = await getServerSession();  
 
   if(!session || !session.user){
     redirect('/login')

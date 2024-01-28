@@ -1,18 +1,16 @@
+"use client";
+
 import React from "react";
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { Button } from "@/components/ui/button";
+import { useSession } from "next-auth/react";
 
-export default async function Page() {
-  const session = await getServerSession();
+export default function Page() {
+  const router = useRouter();
 
-  if(!session || !session.user){
-    redirect('/login')
-  }
+  const onCreateClick = () => {
+    router.push("/menu/create");
+  };
 
-  return (
-    <div>
-      Menu
-      <pre>{JSON.stringify(session, null, 2)}</pre>
-    </div>
-  );
+  return <Button onClick={onCreateClick}>Create menu</Button>;
 }

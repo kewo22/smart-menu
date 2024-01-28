@@ -2,6 +2,8 @@
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import useSWR from "swr";
+import { redirect } from "next/navigation";
+import { useSession } from "next-auth/react";
 import type { Restaurant } from "@prisma/client";
 
 import { Fetcher } from "@/_lib/utils";
@@ -9,6 +11,7 @@ import Form from "./_components/form";
 import Restaurants from "./_components/restaurants";
 
 export default function Page() {
+  const { data: session } = useSession();
   const { data, error, isLoading } = useSWR<Restaurant[]>(
     "/api/restaurant",
     Fetcher,
@@ -27,6 +30,10 @@ export default function Page() {
   useEffect(() => {
     if (data) setRestaurantsData(data);
   }, [data]);
+
+  if (!session || !session.user) {
+    redirect("/login");
+  }
 
   const onRestaurantCreated = (restaurant: Restaurant) => {
     setRestaurantsData((restaurants: Restaurant[]) => {
