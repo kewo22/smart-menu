@@ -1,4 +1,5 @@
 "use client";
+import { Button } from "@/components/ui/button";
 import { ChevronRightIcon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
@@ -34,7 +35,11 @@ export default function Page() {
         </div>
 
         {/* VIEWER */}
-        <div className="flex-grow">Viewer</div>
+        <div className="flex-grow">
+          Viewer
+          <br />
+          <Button variant="default">Download template</Button>
+        </div>
       </div>
     </div>
   );
