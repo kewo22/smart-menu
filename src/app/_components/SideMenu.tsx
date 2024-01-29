@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import Link from 'next/link'
+import Link from "next/link";
 import { signOut } from "next-auth/react";
 
 export default function Page() {
@@ -19,13 +19,15 @@ export default function Page() {
           alt="brand"
           className="mx-auto my-10"
         />
-        <ul className="flex flex-col">
+        <ul className="flex flex-col gap-5">
           <Link href="/">Dashboard</Link>
-          <Link href="/menu">Menu</Link>
+          <Link href="/menu-manage">Menu</Link>
           <Link href="/restaurant">Restaurant</Link>
         </ul>
-        <ul className="mt-auto">
-        <Link href="/user">User</Link>
+        <ul className="mt-auto flex flex-col gap-5">
+          <li>
+            <Link href="/user">User</Link>
+          </li>
           <li>
             <button onClick={onLogOut}>Logout</button>
           </li>
