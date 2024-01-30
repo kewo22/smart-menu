@@ -9,7 +9,7 @@ export default function Page() {
   const router = useRouter();
 
   const onCreateClick = () => {
-    router.push("/menu/create");
+    router.push("/menu-manage/create");
   };
 
   return <Button onClick={onCreateClick}>Create menu</Button>;
