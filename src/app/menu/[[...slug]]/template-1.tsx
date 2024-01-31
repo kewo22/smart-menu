@@ -21,10 +21,6 @@ export default function Template1() {
             <td>$40</td>
           </tr>
           <tr>
-            <td>Cheese Burger</td>
-            <td>$40</td>
-          </tr>
-          <tr>
             <td>Spicy Chicken</td>
             <td>$40</td>
           </tr>
