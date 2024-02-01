@@ -5,45 +5,121 @@ import { getServerSession } from "next-auth";
 
 import { authOptions } from "@/_lib/auth-options";
 import { createSheet, glAuth } from "@/_lib/google";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
+import { db } from "@/_lib/db";
 
 export async function connectToGl() {
     const session = await getServerSession(authOptions);
-
+    // console.log((session?.user as any).restaurant)
     const auth = await glAuth()
 
     const sheets = google.sheets({ version: "v4", auth });
     const drive = google.drive({ version: 'v3', auth });
 
     const sheet = await createSheet(sheets, 'title4');
-    console.log("🚀 ~ connectToGl ~ res:", sheet)
+    // console.log("🚀 ~ connectToGl ~ res:", sheet)
     console.log("🚀 ~ connectToGl ~ res:", sheet.data.spreadsheetUrl)
-    console.log(session?.user?.email)
 
-    const res = await drive.permissions.create({
-        fileId: sheet.data.spreadsheetId!,
+    await sheets.spreadsheets.values.append({
+        spreadsheetId: sheet.data.spreadsheetId!,
+        range: "sheet1",
+        valueInputOption: "USER_ENTERED",
         requestBody: {
-            emailAddress: session?.user?.email,
-            type: "user",
-            role: "writer",
-        },
+            values: [
+                [
+                    "Starters"
+                ],
+                [
+                    "Item", "Price"
+                ],
+                [
+                    "Item 1", "100"
+                ],
+                [
+                    "Item 2", "100"
+                ],
+                [
+                    "Item 3", "100"
+                ],
+                [
+                    "Mains"
+                ],
+                [
+                    "Item", "Price"
+                ],
+                [
+                    "Item 1", "100"
+                ],
+                [
+                    "Item 2", "100"
+                ],
+                [
+                    "Item 3", "100"
+                ],
+                [
+                    "Desserts"
+                ],
+                [
+                    "Item", "Price"
+                ],
+                [
+                    "Item 1", "100"
+                ],
+                [
+                    "Item 2", "100"
+                ],
+                [
+                    "Item 3", "100"
+                ],
+            ]
+        }
     })
-    console.log("🚀 ~ connectToGl ~ res:", res)
 
-    // drive.permissions.create({
-    //     fileId: sheet.data.spreadsheetId!,
-    //     requestBody: {
-    //         emailAddress: "kewinf271@gmail.com",
-    //         type: "user",
-    //         role: "writer",
-    //     },
-    //     fields: "id"
-    // }, function (err: any, res: any) {
-    //     if (err) {
-    //         console.error('Error sharing the sheet:', err);
-    //         return;
-    //     }
-    //     console.log('Sheet shared successfully:', res);
-    // });
+    // delete the sheet if permission is not granted
+    try {
+        const res = await drive.permissions.create({
+            fileId: sheet.data.spreadsheetId!,
+            requestBody: {
+                emailAddress: session?.user?.email,
+                type: "user",
+                role: "writer",
+            },
+        })
+        console.log("🚀 ~ connectToGl ~ res:", res)
+
+        try {
+            const menuObj = {
+                type: "",
+                userId: (session?.user as any).id,
+                isPublished: false,
+                restaurantId: (session?.user as any).restaurant[0].id,
+                sheetId: sheet.data.spreadsheetId!,
+                sheetUrl: sheet.data.spreadsheetUrl!,
+            }
+            const restaurant = await db.menu.create({
+                data: menuObj
+            })
+            console.log("🚀 ~ CreateRestaurant ~ restaurant:", restaurant)
+            return { message: `Restaurant Added`, restaurant };
+        } catch (e) {
+            if (e instanceof PrismaClientKnownRequestError) {
+                // logger.error(JSON.stringify(e));
+                // if (e.code === 'P2002') {
+                //     console.log("🚀 ~ createUser ~ e:", e) 
+                //     console.log(
+                //         'There is a unique constraint violation, a new user cannot be created with this email'
+                //     )
+                // }
+            }
+            // throw e
+            return { error: "Failed to create restaurant" };
+        }
+
+    } catch (error) {
+        console.log("🚀 ~ connectToGl ~ error:", error)
+    }
+
+
 
 
 

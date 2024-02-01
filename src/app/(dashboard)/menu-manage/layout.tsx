@@ -21,7 +21,7 @@ export default async function MenuLayout({
   return (
     <div className="flex flex-col gap-5 h-full overflow-hidden">
       <h1 className="text-2xl">Menu Management</h1>
-      <div className="overflow-hidden">{children}</div>
+      <div className="overflow-hidden h-full">{children}</div>
     </div>
   );
 }

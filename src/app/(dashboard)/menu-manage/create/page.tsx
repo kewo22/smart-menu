@@ -5,11 +5,6 @@ import Image from "next/image";
 import React from "react";
 
 export default function Page() {
-  const arr = [
-    1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
-    1, 1, 1, 1, 1, 1, 1, 1, 1,
-  ];
-
   return (
     <div className="h-full overflow-hidden flex flex-col gap-5">
       <h2 className="flex items-center text-lg">
@@ -19,26 +14,22 @@ export default function Page() {
       </h2>
       <div className="h-full overflow-hidden flex flex-row">
         <div className="grid grid-cols-4 gap-5 h-full overflow-auto flex-[0_0_60%]">
-          {arr.map((item, i) => {
-            return (
-              <div key={i} className="">
-                <Image
-                  src="/sample-menu-card.webp"
-                  alt=""
-                  height={180}
-                  width={150}
-                  priority
-                />
-              </div>
-            );
-          })}
+          Select bg / border style <br />
+          Select font style <br />
+          Select category style <br />
+          Select item / price style <br />
         </div>
 
         {/* VIEWER */}
-        <div className="flex-grow">
+        {/* <div className="flex-grow">
           Viewer
           <br />
           <Button variant="default">Download template</Button>
+        </div> */}
+
+        <div className="box clipped flex-grow h-full">
+          MENU HERE
+          {/* <Image src='/sample-menu-card.webp' alt="" priority height={100} width={100} className="h-full w-full" /> */}
         </div>
       </div>
     </div>
