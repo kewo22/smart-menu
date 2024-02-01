@@ -17,8 +17,6 @@ export async function connectToGl() {
     const drive = google.drive({ version: 'v3', auth });
 
     const sheet = await createSheet(sheets, 'title4');
-    // console.log("🚀 ~ connectToGl ~ res:", sheet)
-    console.log("🚀 ~ connectToGl ~ res:", sheet.data.spreadsheetUrl)
 
     await sheets.spreadsheets.values.append({
         spreadsheetId: sheet.data.spreadsheetId!,
@@ -85,8 +83,6 @@ export async function connectToGl() {
                 role: "writer",
             },
         })
-        console.log("🚀 ~ connectToGl ~ res:", res)
-
         try {
             const menuObj = {
                 type: "",
@@ -147,3 +143,4 @@ export async function connectToGl() {
     // })
 
 }
+
