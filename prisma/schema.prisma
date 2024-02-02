@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mongodb"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model Todo {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  title       String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  isCompleted Boolean? @default(false)
+}
+
+model User {
+  id             String       @id @default(auto()) @map("_id") @db.ObjectId
+  firstName      String
+  lastName       String
+  email          String       @unique
+  contactNo      String
+  userName       String       @unique
+  hashedPassword String
+  createdAt      DateTime     @default(now())
+  emailVerified  Boolean      @default(false)
+  role           Role         @default(OWNER)
+  restaurant     Restaurant[]
+}
+
+enum Role {
+  ADMIN
+  OWNER
+}
+
+model Restaurant {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  address String
+  logo    String
+  userId  String @db.ObjectId
+  user    User   @relation(fields: [userId], references: [id])
+  menu    Menu[]
+}
+
+model Menu {
+  id           String      @id @default(auto()) @map("_id") @db.ObjectId
+  type         String // OR ENUM
+  userId       String      @db.ObjectId
+  isPublished  Boolean     @default(false)
+  restaurant   Restaurant? @relation(fields: [restaurantId], references: [id])
+  restaurantId String?     @db.ObjectId
+  sheetId      String
+  sheetUrl     String
+}
