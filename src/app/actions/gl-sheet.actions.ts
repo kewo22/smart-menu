@@ -115,10 +115,6 @@ export async function connectToGl() {
         console.log("🚀 ~ connectToGl ~ error:", error)
     }
 
-
-
-
-
     // GET
     // const data = await sheets.spreadsheets.values.get({
     //     spreadsheetId: "1E02HuASgeNK4FMg-wCvzadotO_d85ggwfYotlhF9iSs",

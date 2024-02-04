@@ -14,27 +14,34 @@ export default function Page({ params }: { params: { slug: string } }) {
   const {
     data: template,
     error,
-    isLoading,
+    isLoading: isTemplateLoading,
   } = useSWR<Menu>("/api/menu", Fetcher, {
     revalidateOnFocus: false,
   });
 
-  const { data: menu } = useSWR(
+  const { data: menu, isLoading: isMenuLoading } = useSWR<any>(
     template ? `/api/menu/template/${template.sheetId}` : null,
     Fetcher
   );
 
-  console.log("🚀 ~ Page ~ menu:", menu);
+  if (isTemplateLoading || isMenuLoading) {
+    return <h1>Loading</h1>;
+  }
 
-  if (params.slug[0] === "t1") {
+  // console.log("🚀 ~ Page ~ menu:", menu);
+  menu?.data?.forEach((val: any) => {
+    console.log(val)
+  });
+
+  if (template && menu && params.slug[0] === "t1") {
     return <Template1 />;
   }
 
-  if (params.slug[0] === "t2") {
+  if (template && menu && params.slug[0] === "t2") {
     return <Template2 />;
   }
 
-  if (params.slug[0] === "t3") {
+  if (template && menu && params.slug[0] === "t3") {
     return <Template3 />;
   }
 
