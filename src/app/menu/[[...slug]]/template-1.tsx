@@ -1,11 +1,37 @@
 import React from "react";
 
-export default function Template1() {
+type Template1Props = {
+  menuObj: any;
+};
+
+export default function Template1(props: Template1Props) {
+  console.log("🚀 ~ Template1 ~ props:", props.menuObj);
+  // console.log("🚀 ~ Template1 ~ props:", Object.values(props.menuObj));
+  const arr: any[] = Object.values(props.menuObj);
+  console.log("🚀 ~ Template1 ~ arr:", arr);
   return (
-    <section className="max-w-lg flex flex-col mx-auto bg-black h-svh">
+    // max-w-lg
+    <section className=" flex flex-col mx-auto bg-black h-svh">
       <h1 className="text-4xl text-white text-center mx-auto my-5">
         FOOD MENU
       </h1>
+
+      {arr.map((item, i) => {
+        return (
+          <div key={i} className="text-white">
+            <div>{item.category}</div>
+            <div>
+              {item.items.map((d: any, i: number) => {
+                return (
+                  <div key={i}>
+                    {d.name} - {d.price}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        );
+      })}
 
       <div className="bg-orange-500 text-white w-fit px-3 py-1 rounded-md font-bold mb-2 mx-5">
         MAIN COURSE
