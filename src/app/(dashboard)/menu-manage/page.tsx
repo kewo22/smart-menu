@@ -11,8 +11,9 @@ export default function Page() {
   const router = useRouter();
 
   const onCreateClick = async () => {
-    const result = await connectToGl();
+    // const result = await connectToGl();
     // console.log("🚀 ~ onCreateClick ~ result:", result)
+    router.push("/menu-manage/create")
   };
 
   return (

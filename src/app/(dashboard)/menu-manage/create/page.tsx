@@ -14,10 +14,15 @@ export default function Page() {
       </h2>
       <div className="h-full overflow-hidden flex flex-row">
         <div className="grid grid-cols-4 gap-5 h-full overflow-auto flex-[0_0_60%]">
-          Select bg / border style <br />
+          {/* Select bg / border style <br />
           Select font style <br />
           Select category style <br />
-          Select item / price style <br />
+          Select item / price style <br /> */}
+          <div>qwdwqd</div>
+          <div>qwdwqd</div>
+          <div>qwdwqd</div>
+          <div>qwdwqd</div>
+          <div>qwdwqd</div>
         </div>
 
         {/* VIEWER */}
