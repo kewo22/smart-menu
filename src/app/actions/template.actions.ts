@@ -9,11 +9,11 @@ import {
   CreateTemplateValidatePayload,
   TemplatePayload,
 } from "../template/_components/form";
-import { Prisma } from "@prisma/client";
+import { Prisma, Template } from "@prisma/client";
 
 export async function createTemplate(
   template: TemplatePayload
-): Promise<ActionResponse<TemplatePayload>> {
+): Promise<ActionResponse<Template>> {
   const templateObj = {
     ...template,
     name: template.name,

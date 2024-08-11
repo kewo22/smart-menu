@@ -20,6 +20,7 @@ import { ActionResponse } from "@/_lib/interfaces/global";
 import { useFormState, useFormStatus } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { sheets_v4 } from "googleapis";
+import { Template } from "@prisma/client";
 
 export const CreateTemplateSchema = z.object({
     name: z.string().trim().min(1, { message: "Required" }).refine(s => !s.includes(' '), `Title cannot contain spaces.`)
@@ -30,8 +31,12 @@ export type TemplatePayload = {
     spreadsheetUrl: string;
 } & CreateTemplateValidatePayload;
 
-export default function CreateTemplateForm() {
+type CreateTemplateFormProps = {
+    onTemplateCreated: (row: Template) => void;
+}
 
+export default function CreateTemplateForm(props: CreateTemplateFormProps) {
+    const { onTemplateCreated } = props;
     const isLoadingRef = useRef(false)
 
     const form = useForm<CreateTemplateValidatePayload>({
@@ -43,11 +48,21 @@ export default function CreateTemplateForm() {
 
     const onSubmit = async (values: z.infer<typeof CreateTemplateSchema>) => {
         isLoadingRef.current = true;
-        const template = await createTemplateSheetSheet(values)
-        setTimeout(() => {
-            template && createTemplate(template)
+        const templateSheet = await createTemplateSheetSheet(values)
+        setTimeout(async () => {
+            const templateRes = templateSheet && await createTemplate(templateSheet)
             form.reset()
             isLoadingRef.current = false;
+            if (templateRes) {
+                // const template: Template = {
+                //     ...templateRes,
+                //     name: templateRes.name,
+                //     id: templateRes.id,
+                //     spreadsheetId: templateRes.spreadsheetId,
+                //     spreadsheetUrl: templateRes.spreadsheetUrl,
+                // }
+                onTemplateCreated(templateRes);
+            }
         }, 1000);
     }
 
@@ -80,6 +95,7 @@ export default function CreateTemplateForm() {
         }
         isLoadingRef.current = false;
         showToast(sheet);
+        return sheet.data;
     }
 
     const showToast = (response: ActionResponse) => {
@@ -108,7 +124,7 @@ export default function CreateTemplateForm() {
         <Form {...form}>
             <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="flex flex-col gap-5"
+                className="flex flex-row items-end gap-5"
             >
                 <FormField
                     control={form.control}
