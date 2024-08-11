@@ -17,14 +17,14 @@ export default function Page() {
           width={150}
           height={150}
           alt="brand"
-          className="mx-auto my-10"
+          className="mx-auto mb-10"
         />
-        <ul className="flex flex-col gap-5">
+        <ul className="flex flex-col gap-2">
           <Link href="/">Dashboard</Link>
           <Link href="/menu-manage">Menu</Link>
           <Link href="/restaurant">Restaurant</Link>
         </ul>
-        <ul className="mt-auto flex flex-col gap-5">
+        <ul className="mt-auto flex flex-col gap-2">
           <li>
             <Link href="/user">User</Link>
           </li>

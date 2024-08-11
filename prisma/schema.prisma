@@ -57,4 +57,14 @@ model Menu {
   restaurantId String?     @db.ObjectId
   sheetId      String
   sheetUrl     String
+  templates    Template[]
+}
+
+model Template {
+  id             String  @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  spreadsheetId  String
+  spreadsheetUrl String
+  menu           Menu?   @relation(fields: [menuId], references: [id])
+  menuId         String? @db.ObjectId
 }

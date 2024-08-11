@@ -2,10 +2,10 @@
 
 import { google } from "googleapis";
 import { getServerSession } from "next-auth";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 import { authOptions } from "@/_lib/auth-options";
 import { createSheet, glAuth } from "@/_lib/google";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { db } from "@/_lib/db";
 
 export async function connectToGl() {

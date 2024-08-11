@@ -4,7 +4,7 @@ import React from "react";
 import { redirect, useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
-import { connectToGl } from "@/app/actions/gl-sheet.actions";
+// import { connectToGl } from "@/app/actions/gl-sheet.actions";
 
 
 export default function Page() {

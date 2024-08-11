@@ -15,10 +15,10 @@ export default async function Page() {
   }
 
   return (
-    <div className="flex flex-col gap-10 h-full overflow-hidden">
+    <div className="flex flex-col gap-10 h-full overflow-auto">
       <h1 className="text-2xl">User Management</h1>
       {/* <pre>{JSON.stringify(session, null, 2)}</pre> */}
-      <div className="flex flex-row gap-16 bg-slate-100 h-fit p-10 rounded-lg w-fit drop-shadow-lg">
+      <div className="flex flex-row gap-16 bg-slate-100 h-fit p-10 rounded-lg w-fit drop-shadow-lg min-w-[783px]">
         <div>
           <span className="block">Name</span>
           <span className="font-bold capitalize">

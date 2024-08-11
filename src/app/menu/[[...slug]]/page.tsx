@@ -30,6 +30,7 @@ export default function Page({ params }: { params: { slug: string } }) {
   useEffect(() => {
     if (menu && menu.data) {
       const menuItems = [...menu.data];
+      console.log(menuItems)
       const menuObj = convertArrayToObject(menuItems);
       setMenuObj(menuObj);
     }
@@ -41,9 +42,7 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   const convertArrayToObject = (array: any[]) => {
     const result: any = {};
-
     let currentCategory = null;
-
     for (const item of array) {
       if (item.length === 1) {
         currentCategory = item[0];

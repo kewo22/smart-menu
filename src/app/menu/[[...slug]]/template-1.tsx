@@ -1,7 +1,9 @@
+import { Restaurant } from "@prisma/client";
 import React from "react";
 
 type Template1Props = {
   menuObj: any;
+  // restaurant: Restaurant
 };
 
 export default function Template1(props: Template1Props) {
