@@ -35,8 +35,12 @@ export default function TemplateList(props: TemplateProps) {
         {
             accessorKey: "name",
             header: "Name",
+        },
+        {
+            accessorKey: "description",
+            header: "Description",
             cell: ({ row }) => (
-                <div className="capitalize w-28">{row.getValue("name")}</div>
+                <div className="capitalize max-w-56 truncate">{row.getValue("description")}</div>
             ),
         },
         {
@@ -47,14 +51,11 @@ export default function TemplateList(props: TemplateProps) {
             accessorKey: "spreadsheetUrl",
             header: "Spreadsheet Url",
             cell: ({ row }) => (
-                <div className="w-96 flex flex-row items-center">
-                    <div className="max-w-48 truncate text-sm">{row.getValue("spreadsheetUrl")}</div>
-                    <Button variant="outline" size="icon" onClick={() =>
-                        (table?.options?.meta as any).onOpenSheetUrl(row.original)
-                    }>
-                        <ExternalLinkIcon className="size-4" />
-                    </Button>
-                </div>
+                <Button variant="outline" size="icon" onClick={() =>
+                    (table?.options?.meta as any).onOpenSheetUrl(row.original)
+                }>
+                    <ExternalLinkIcon className="size-4" />
+                </Button>
             )
         },
     ];
@@ -93,54 +94,60 @@ export default function TemplateList(props: TemplateProps) {
         window.open(row.spreadsheetUrl, '_blank')!.focus();
     }
 
+    if (isLoading) {
+        return <>Loading</>
+    }
+
     return (
-        <Table>
-            <TableHeader>
-                {table.getHeaderGroups().map((headerGroup) => (
-                    <TableRow key={headerGroup.id}>
-                        {headerGroup.headers.map((header) => {
-                            return (
-                                <TableHead key={header.id}>
-                                    {header.isPlaceholder
-                                        ? null
-                                        : flexRender(
-                                            header.column.columnDef.header,
-                                            header.getContext()
-                                        )}
-                                </TableHead>
-                            );
-                        })}
-                    </TableRow>
-                ))}
-            </TableHeader>
-            <TableBody>
-                {table.getRowModel().rows?.length ? (
-                    table.getRowModel().rows.map((row) => (
-                        <TableRow
-                            key={row.id}
-                            data-state={row.getIsSelected() && "selected"}
-                        >
-                            {row.getVisibleCells().map((cell) => (
-                                <TableCell key={cell.id}>
-                                    {flexRender(
-                                        cell.column.columnDef.cell,
-                                        cell.getContext()
-                                    )}
-                                </TableCell>
-                            ))}
+        <div className="rounded-md border">
+            <Table>
+                <TableHeader>
+                    {table.getHeaderGroups().map((headerGroup) => (
+                        <TableRow key={headerGroup.id}>
+                            {headerGroup.headers.map((header) => {
+                                return (
+                                    <TableHead key={header.id}>
+                                        {header.isPlaceholder
+                                            ? null
+                                            : flexRender(
+                                                header.column.columnDef.header,
+                                                header.getContext()
+                                            )}
+                                    </TableHead>
+                                );
+                            })}
                         </TableRow>
-                    ))
-                ) : (
-                    <TableRow>
-                        <TableCell
-                            colSpan={columns.length}
-                            className="h-24 text-center"
-                        >
-                            No Templates Added.
-                        </TableCell>
-                    </TableRow>
-                )}
-            </TableBody>
-        </Table>
+                    ))}
+                </TableHeader>
+                <TableBody>
+                    {table.getRowModel().rows?.length ? (
+                        table.getRowModel().rows.map((row) => (
+                            <TableRow
+                                key={row.id}
+                                data-state={row.getIsSelected() && "selected"}
+                            >
+                                {row.getVisibleCells().map((cell) => (
+                                    <TableCell key={cell.id}>
+                                        {flexRender(
+                                            cell.column.columnDef.cell,
+                                            cell.getContext()
+                                        )}
+                                    </TableCell>
+                                ))}
+                            </TableRow>
+                        ))
+                    ) : (
+                        <TableRow>
+                            <TableCell
+                                colSpan={columns.length}
+                                className="h-24 text-center"
+                            >
+                                No Templates Added.
+                            </TableCell>
+                        </TableRow>
+                    )}
+                </TableBody>
+            </Table >
+        </div >
     );
 }

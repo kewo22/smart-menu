@@ -35,9 +35,11 @@ export default function Page() {
     }
 
     return (
-        <div className="min-h-screen w-full flex flex-col items-start p-10 gap-5">
+        <div className="min-h-screen w-full h-full flex flex-col items-start p-5 gap-5 overflow-hidden">
             <CreateTemplateForm onTemplateCreated={onRestaurantCreated} />
-            <Table data={templateData} isLoading={isLoading} />
+            <div className="flex-grow overflow-y-auto w-full">
+                <Table data={templateData} isLoading={isLoading} />
+            </div>
         </div>
     );
 }

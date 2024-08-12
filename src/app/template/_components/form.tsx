@@ -21,9 +21,11 @@ import { useFormState, useFormStatus } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { sheets_v4 } from "googleapis";
 import { Template } from "@prisma/client";
+import { Textarea } from "@/components/ui/textarea";
 
 export const CreateTemplateSchema = z.object({
-    name: z.string().trim().min(1, { message: "Required" }).refine(s => !s.includes(' '), `Title cannot contain spaces.`)
+    name: z.string().trim().min(1, { message: "Required" }).refine(s => !s.includes(' '), `Title cannot contain spaces.`),
+    description: z.string().trim().min(1, { message: "Required" })
 });
 export type CreateTemplateValidatePayload = z.infer<typeof CreateTemplateSchema>;
 export type TemplatePayload = {
@@ -43,6 +45,7 @@ export default function CreateTemplateForm(props: CreateTemplateFormProps) {
         resolver: zodResolver(CreateTemplateSchema),
         defaultValues: {
             name: "",
+            description: "",
         },
     });
 
@@ -54,13 +57,6 @@ export default function CreateTemplateForm(props: CreateTemplateFormProps) {
             form.reset()
             isLoadingRef.current = false;
             if (templateRes) {
-                // const template: Template = {
-                //     ...templateRes,
-                //     name: templateRes.name,
-                //     id: templateRes.id,
-                //     spreadsheetId: templateRes.spreadsheetId,
-                //     spreadsheetUrl: templateRes.spreadsheetUrl,
-                // }
                 onTemplateCreated(templateRes);
             }
         }, 1000);
@@ -86,7 +82,8 @@ export default function CreateTemplateForm(props: CreateTemplateFormProps) {
         const sheet = await createTemplateAction({
             name: template.properties!.title!,
             spreadsheetUrl: template!.spreadsheetUrl!,
-            spreadsheetId: template!.spreadsheetId!
+            spreadsheetId: template!.spreadsheetId!,
+            description: form.getValues('description')
         });
         if (sheet.error) {
             isLoadingRef.current = false;
@@ -140,7 +137,21 @@ export default function CreateTemplateForm(props: CreateTemplateFormProps) {
                         </FormItem>
                     )}
                 />
-                <SubmitBtn isLoading={isLoadingRef.current} />
+                <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Description</FormLabel>
+                            <FormControl>
+                                <Textarea {...field} rows={1} className="min-h-full" />
+                            </FormControl>
+                            <FormDescription />
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <SubmitBtn isLoading={isLoadingRef.current}  />
             </form>
         </Form>
     );

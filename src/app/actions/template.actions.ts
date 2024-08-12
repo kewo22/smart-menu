@@ -19,6 +19,7 @@ export async function createTemplate(
     name: template.name,
     spreadsheetUrl: template.spreadsheetUrl,
     spreadsheetId: template.spreadsheetId,
+    description: template.description,
   };
 
   try {

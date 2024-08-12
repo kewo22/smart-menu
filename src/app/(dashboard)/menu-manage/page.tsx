@@ -18,7 +18,7 @@ export default function Page() {
 
   return (
     <>
-      <Button onClick={onCreateClick}>Create menu</Button>
+      <Button onClick={onCreateClick}>Create new menu</Button>
     </>
   );
 }
