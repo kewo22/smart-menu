@@ -1,5 +1,6 @@
 "use client";
 import { Fetcher } from "@/_lib/utils";
+import { createMenu } from "@/app/actions/menu-actions";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Template } from "@prisma/client";
@@ -7,6 +8,7 @@ import { ChevronRightIcon } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import useSWR from "swr";
+import CreateMenuBtn from "./create-menu";
 
 export default function Page() {
 
@@ -26,7 +28,11 @@ export default function Page() {
     if (data) setTemplateData(data);
   }, [data]);
 
-  console.log(templateData)
+
+  const onCreateMenu = async () => {
+    const x = await createMenu();
+    console.log(x)
+  }
 
   return (
     <div className="h-full overflow-hidden flex flex-col gap-5">
@@ -52,7 +58,8 @@ export default function Page() {
                 </CardContent>
                 <CardFooter className="w-full flex justify-end gap-2">
                   <Button variant="outline" size="sm" className="text-xs">Preview</Button>
-                  <Button variant="outline" size="sm" className="text-xs">Create</Button>
+                  {/* <Button variant="outline" size="sm" className="text-xs" onClick={onCreateMenu}>Create</Button> */}
+                  <CreateMenuBtn />
                 </CardFooter>
               </Card>
             ))
