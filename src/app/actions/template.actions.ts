@@ -20,6 +20,7 @@ export async function createTemplate(
     spreadsheetUrl: template.spreadsheetUrl,
     spreadsheetId: template.spreadsheetId,
     description: template.description,
+    previewImageUrl: "",
   };
 
   try {

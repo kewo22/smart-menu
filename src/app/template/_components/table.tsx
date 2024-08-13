@@ -7,8 +7,9 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Template } from "@prisma/client";
-import { ExternalLinkIcon } from "@radix-ui/react-icons";
+import { ExternalLinkIcon, ImageIcon } from "@radix-ui/react-icons";
 import {
     ColumnDef,
     ColumnFiltersState,
@@ -22,6 +23,8 @@ import {
     useReactTable,
 } from "@tanstack/react-table";
 import React from "react";
+import Image from "next/image";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
 type TemplateProps = {
     data: Template[];
@@ -32,6 +35,34 @@ export default function TemplateList(props: TemplateProps) {
     const { data, isLoading } = props;
 
     const columns: ColumnDef<Template>[] = [
+        {
+            accessorKey: "previewImageUrl",
+            header: "Preview Image",
+            cell: ({ row }) => (
+                <Popover>
+                    <PopoverTrigger asChild>
+                        <Image
+                            src={row.getValue("previewImageUrl")}
+                            alt={`previewImageUrl-${row.original.id}`}
+                            priority
+                            height={80}
+                            width={50}
+                            className="rounded-md cursor-pointer"
+                        />
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto">
+                        <Image
+                            src={row.getValue("previewImageUrl")}
+                            alt={`previewImageUrl-${row.original.id}`}
+                            priority
+                            height={300}
+                            width={150}
+                            className="rounded-md cursor-pointer"
+                        />
+                    </PopoverContent>
+                </Popover>
+            ),
+        },
         {
             accessorKey: "name",
             header: "Name",
@@ -51,12 +82,48 @@ export default function TemplateList(props: TemplateProps) {
             accessorKey: "spreadsheetUrl",
             header: "Spreadsheet Url",
             cell: ({ row }) => (
-                <Button variant="outline" size="icon" onClick={() =>
-                    (table?.options?.meta as any).onOpenSheetUrl(row.original)
-                }>
-                    <ExternalLinkIcon className="size-4" />
-                </Button>
+                <TooltipProvider>
+                    <Tooltip>
+                        <TooltipTrigger asChild>
+                            <Button variant="outline" size="icon" onClick={() =>
+                                (table?.options?.meta as any).onOpenSheetUrl(row.original)
+                            }><ExternalLinkIcon className="size-4" /></Button>
+                        </TooltipTrigger>
+                        <TooltipContent>
+                            <span className="text-xs">{row.getValue("spreadsheetUrl")}</span>
+                        </TooltipContent>
+                    </Tooltip>
+                </TooltipProvider>
             )
+        },
+        {
+            id: "actions",
+            enableHiding: false,
+            cell: ({ row }) => {
+                return (
+                    <div className="w-13 flex flex-row justify-end">
+                        <TooltipProvider>
+                            <Tooltip>
+                                <TooltipTrigger asChild>
+                                    <Button
+                                        variant="ghost"
+                                        className="h-8 w-8 p-0"
+                                        onClick={() =>
+                                            (table?.options?.meta as any).onAddUpdatePreviewImage(row.original)
+                                        }
+                                    >
+                                        <span className="sr-only">Add Image</span>
+                                        <ImageIcon className="h-4 w-4" />
+                                    </Button>
+                                </TooltipTrigger>
+                                <TooltipContent>
+                                    <span className="text-xs">Add/Update Preview Image</span>
+                                </TooltipContent>
+                            </Tooltip>
+                        </TooltipProvider>
+                    </div>
+                );
+            },
         },
     ];
 
@@ -87,11 +154,16 @@ export default function TemplateList(props: TemplateProps) {
         },
         meta: {
             onOpenSheetUrl: (row: Template) => onOpenSheetUrl(row),
+            onAddUpdatePreviewImage: (row: Template) => onAddUpdatePreviewImage(row)
         },
     });
 
     const onOpenSheetUrl = (row: Template) => {
         window.open(row.spreadsheetUrl, '_blank')!.focus();
+    }
+
+    const onAddUpdatePreviewImage = (row: Template) => {
+        console.log(row)
     }
 
     if (isLoading) {
