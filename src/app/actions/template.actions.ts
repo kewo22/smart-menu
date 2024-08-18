@@ -10,6 +10,7 @@ import {
   TemplatePayload,
 } from "../template/_components/form";
 import { Prisma, Template } from "@prisma/client";
+import { put, PutBlobResult } from "@vercel/blob";
 
 export async function createTemplate(
   template: TemplatePayload
@@ -20,7 +21,7 @@ export async function createTemplate(
     spreadsheetUrl: template.spreadsheetUrl,
     spreadsheetId: template.spreadsheetId,
     description: template.description,
-    previewImageUrl: "",
+    previewImageUrl: template.previewImageUrl,
   };
 
   try {
@@ -32,5 +33,22 @@ export async function createTemplate(
     if (e instanceof PrismaClientKnownRequestError) {
     }
     return { message: "Failed to create template", error: e };
+  }
+}
+
+export async function UploadPreviewImage(
+  formData: any
+): Promise<ActionResponse<PutBlobResult>> {
+  try {
+    const previewImgFile = formData.get("previewImage") as File;
+    const blob: PutBlobResult = await put(previewImgFile.name, previewImgFile, {
+      access: "public",
+    });
+    return {
+      data: blob,
+      message: "Preview image uploaded",
+    };
+  } catch (e: any) {
+    return { error: JSON.stringify(e), message: "Preview image upload fail" };
   }
 }

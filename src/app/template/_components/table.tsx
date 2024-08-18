@@ -96,35 +96,6 @@ export default function TemplateList(props: TemplateProps) {
                 </TooltipProvider>
             )
         },
-        {
-            id: "actions",
-            enableHiding: false,
-            cell: ({ row }) => {
-                return (
-                    <div className="w-13 flex flex-row justify-end">
-                        <TooltipProvider>
-                            <Tooltip>
-                                <TooltipTrigger asChild>
-                                    <Button
-                                        variant="ghost"
-                                        className="h-8 w-8 p-0"
-                                        onClick={() =>
-                                            (table?.options?.meta as any).onAddUpdatePreviewImage(row.original)
-                                        }
-                                    >
-                                        <span className="sr-only">Add Image</span>
-                                        <ImageIcon className="h-4 w-4" />
-                                    </Button>
-                                </TooltipTrigger>
-                                <TooltipContent>
-                                    <span className="text-xs">Add/Update Preview Image</span>
-                                </TooltipContent>
-                            </Tooltip>
-                        </TooltipProvider>
-                    </div>
-                );
-            },
-        },
     ];
 
     const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -154,16 +125,11 @@ export default function TemplateList(props: TemplateProps) {
         },
         meta: {
             onOpenSheetUrl: (row: Template) => onOpenSheetUrl(row),
-            onAddUpdatePreviewImage: (row: Template) => onAddUpdatePreviewImage(row)
         },
     });
 
     const onOpenSheetUrl = (row: Template) => {
         window.open(row.spreadsheetUrl, '_blank')!.focus();
-    }
-
-    const onAddUpdatePreviewImage = (row: Template) => {
-        console.log(row)
     }
 
     if (isLoading) {

@@ -26,9 +26,7 @@ import {
   UploadLogo,
 } from "@/app/actions/restaurant-actions";
 import { Button } from "@/components/ui/button";
-
-const MAX_FILE_SIZE = 4000000;
-const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png"];
+import { ACCEPTED_IMAGE_TYPES, MAX_FILE_SIZE } from "@/_lib/constants/global";
 
 const RestaurantSchema = z.object({
   name: z.string().trim().min(1, { message: "Required" }),

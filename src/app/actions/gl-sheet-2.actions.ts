@@ -60,7 +60,6 @@ export const createTemplateSheetSheet = async (
 
     return { message: `Sheet created`, data: sheet.data };
   } catch (e: any) {
-    console.log(e);
     return {
       message: "Failed to create sheet",
       error: "e",
