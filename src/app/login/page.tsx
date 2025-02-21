@@ -21,18 +21,13 @@ import { signIn } from "next-auth/react";
 
 type LoginProps = {
   params: any;
-  searchParams: {
+  searchParams: Promise<{
     callbackUrl: string;
     error: string;
-  };
+  }>;
 };
 
 const Login = (props: LoginProps) => {
-  console.log("🚀 ~ file: page.tsx:25 ~ Login ~ props:", props);
-  console.log(
-    "---------------------------------->",
-    process.env.NEXTAUTH_SECRET
-  );
   const router = useRouter();
   // const [email, setEmail] = useState("");
   // const [password, setPassword] = useState("");
@@ -97,9 +92,9 @@ const Login = (props: LoginProps) => {
                           placeholder="Email"
                           className="w-full px-3 py-2 border rounded-md focus:outline-none focus:border-blue-500 text-center"
                           {...field}
-                          // value={email}
-                          // onChange={(e) => setEmail(e.target.value)}
-                          // onClick={handleInputClick}
+                        // value={email}
+                        // onChange={(e) => setEmail(e.target.value)}
+                        // onClick={handleInputClick}
                         />
                         {/* <FontAwesomeIcon
                           icon={faEnvelope}

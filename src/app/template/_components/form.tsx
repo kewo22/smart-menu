@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useActionState } from "react";
 import { useForm } from "react-hook-form";
 import { PutBlobResult } from "@vercel/blob";
 
@@ -18,7 +18,7 @@ import { createTemplate as createTemplateAction, UploadPreviewImage } from "../.
 
 import { cn } from "@/_lib/utils";
 import { ActionResponse } from "@/_lib/interfaces/global";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormStatus } from "react-dom";
 import { Button } from "@/components/ui/button";
 import { sheets_v4 } from "googleapis";
 import { Template } from "@prisma/client";
@@ -81,7 +81,7 @@ export default function CreateTemplateForm(props: CreateTemplateFormProps) {
         }
         const templateSheet = await createTemplateSheetSheet(values)
         setTimeout(async () => {
-            const templateRes = templateSheet && await createTemplate(templateSheet, previewImageResult.data!)
+            const templateRes = templateSheet && (await createTemplate(templateSheet, previewImageResult.data!))
             form.reset(defaultValues);
             form.setValue("previewImage", undefined as any);
             isLoadingRef.current = false;

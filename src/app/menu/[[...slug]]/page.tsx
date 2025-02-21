@@ -7,9 +7,10 @@ import Template3 from "./template-3";
 import useSWR from "swr";
 import type { Menu } from "@prisma/client";
 import { Fetcher } from "@/_lib/utils";
-import { useEffect, useState } from "react";
+import { useEffect, useState, use } from "react";
 
-export default function Page({ params }: { params: { slug: string } }) {
+export default function Page(props: { params: Promise<{ slug: string }> }) {
+  const params = use(props.params);
   // console.log("🚀 ~ Page ~ params:", params.slug[0]);
 
   const {

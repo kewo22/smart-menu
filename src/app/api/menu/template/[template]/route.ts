@@ -3,10 +3,8 @@ import { getServerSession } from "next-auth";
 import { google } from "googleapis";
 import { glAuth } from "@/_lib/google";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { template: string } }
-) {
+export async function GET(request: Request, props: { params: Promise<{ template: string }> }) {
+  const params = await props.params;
   const auth = await glAuth();
   const sheets = google.sheets({ version: "v4", auth });
 

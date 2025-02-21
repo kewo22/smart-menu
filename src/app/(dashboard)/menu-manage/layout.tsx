@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { getServerSession } from "next-auth";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
+import { headers, UnsafeUnwrappedHeaders } from "next/headers";
 
 export const metadata: Metadata = {
   title: "Smart Menu",
@@ -13,14 +14,26 @@ export default async function MenuLayout({
   children: React.ReactNode;
 }) {
   const session = await getServerSession();
+  const headerList = headers();
+  const pathname = (await headerList).get("x-current-path");
+
+  let heading = 'Menu Management';
 
   if (!session || !session.user) {
     redirect("/login");
   }
 
+  // const getLastSeg = (pathname: string | null) => {
+  //   return pathname?.split('/').pop() || '';
+  // }
+
+  // if (getLastSeg(pathname) === 'create') {
+  //   heading = heading + ' Create Menu';
+  // }
+
   return (
     <div className="flex flex-col gap-5 h-full overflow-hidden">
-      <h1 className="text-2xl">Menu Management</h1>
+      <h1 className="text-2xl">{heading}</h1>
       <div className="overflow-hidden h-full">{children}</div>
     </div>
   );

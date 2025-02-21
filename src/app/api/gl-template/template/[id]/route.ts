@@ -3,10 +3,8 @@ import { getServerSession } from "next-auth";
 import { google, sheets_v4 } from "googleapis";
 import { glAuth } from "@/_lib/google";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: Request, props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   try {
     const auth = await glAuth();
     const sheets = google.sheets({ version: "v4", auth });
@@ -42,7 +40,7 @@ export async function GET(
     const res = await drive.permissions.create({
       fileId: createdSheet.data.spreadsheetId!,
       requestBody: {
-        emailAddress: "agalya177@gmail.com",
+        emailAddress: "kewinf271@gmail.com",
         type: "user",
         role: "writer",
       },

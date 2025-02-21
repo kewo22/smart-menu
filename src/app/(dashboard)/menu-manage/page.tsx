@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { useSession } from "next-auth/react";
 // import { connectToGl } from "@/app/actions/gl-sheet.actions";
 
-
 export default function Page() {
   const router = useRouter();
 
