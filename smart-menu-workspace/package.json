@@ -2,7 +2,19 @@
   "name": "@smart-menu-workspace/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "dev": "nx dev web",
+    "build": "nx build web",
+    "start": "nx start web",
+    "lint": "nx run-many -t lint",
+    "test": "nx run-many -t test",
+    "format": "nx format:write",
+    "format:check": "nx format:check",
+    "prisma:generate": "prisma generate",
+    "prisma:push": "prisma db push",
+    "prisma:studio": "prisma studio",
+    "graph": "nx graph"
+  },
   "private": true,
   "dependencies": {
     "next": "~16.0.1",
