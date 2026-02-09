@@ -11,11 +11,10 @@
         "prefix": ""
     },
     "aliases": {
-        "components": "@/components",
-        "utils": "@/lib/utils",
-        "ui": "@/components/ui",
-        "lib": "@/lib",
-        "hooks": "@/hooks"
+        "components": "@smart-menu-workspace/shared-ui/components",
+        "utils": "@smart-menu-workspace/shared-ui/utils",
+        "ui": "@smart-menu-workspace/shared-ui/ui",
+        "hooks": "@smart-menu-workspace/shared-ui/hooks"
     },
     "iconLibrary": "lucide"
 }
