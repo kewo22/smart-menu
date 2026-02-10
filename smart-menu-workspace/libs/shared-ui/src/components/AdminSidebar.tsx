@@ -13,14 +13,14 @@ import { cn } from '../utils';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 const navItems = [
-    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
-    { name: 'Restaurants', href: '/restaurants', icon: Store },
-    { name: 'Subscriptions', href: '/subscriptions', icon: CreditCard },
-    { name: 'Templates', href: '/templates', icon: LayoutTemplate },
-    { name: 'Settings', href: '/settings', icon: Settings },
+    { name: 'Dashboard', href: '/admin/dashboard', icon: LayoutDashboard },
+    { name: 'Restaurants', href: '/admin/restaurants', icon: Store },
+    { name: 'Subscriptions', href: '/admin/subscriptions', icon: CreditCard },
+    { name: 'Templates', href: '/admin/templates', icon: LayoutTemplate },
+    { name: 'Settings', href: '/admin/settings', icon: Settings },
 ];
 
-export function Sidebar() {
+export function AdminSidebar() {
     const pathname = usePathname();
 
     return (
