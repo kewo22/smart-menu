@@ -6,7 +6,7 @@ export default function AdminLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="dark">
+        <div className="dark bg-background min-h-screen">
             <DashboardLayout>{children}</DashboardLayout>
         </div>
     );

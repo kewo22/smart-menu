@@ -8,7 +8,7 @@ export default function RestaurantLayout({
     children: React.ReactNode;
 }) {
     return (
-        <div className="light bg-[#f6f8f8] min-h-screen">
+        <div className="dark bg-background min-h-screen">
             <DashboardLayout Sidebar={RestaurantSidebar}>{children}</DashboardLayout>
         </div>
     );
