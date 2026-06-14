@@ -1,0 +1,374 @@
+{
+  "version": "6.0",
+  "nxVersion": "22.4.5",
+  "pathMappings": {
+    "@smart-menu-workspace/shared-ui": [
+      "libs/shared-ui/src/index.ts"
+    ],
+    "@smart-menu-workspace/shared-ui/*": [
+      "libs/shared-ui/src/*"
+    ]
+  },
+  "nxJsonPlugins": [
+    {
+      "name": "@nx/js/typescript",
+      "options": {
+        "typecheck": {
+          "targetName": "typecheck"
+        },
+        "build": {
+          "targetName": "build",
+          "configName": "tsconfig.lib.json",
+          "buildDepsName": "build-deps",
+          "watchDepsName": "watch-deps"
+        }
+      }
+    },
+    {
+      "name": "@nx/next/plugin",
+      "options": {
+        "startTargetName": "start",
+        "buildTargetName": "build",
+        "devTargetName": "dev",
+        "serveStaticTargetName": "serve-static",
+        "buildDepsTargetName": "build-deps",
+        "watchDepsTargetName": "watch-deps"
+      }
+    },
+    {
+      "name": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    },
+    {
+      "name": "@nx/playwright/plugin",
+      "options": {
+        "targetName": "e2e"
+      }
+    },
+    {
+      "name": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test"
+      }
+    }
+  ],
+  "fileMap": {
+    "nonProjectFiles": [
+      {
+        "file": ".editorconfig",
+        "hash": "11532813898455409296"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "11025232050410716590"
+      },
+      {
+        "file": ".prettierignore",
+        "hash": "17085498363870782104"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "6820402234827505055"
+      },
+      {
+        "file": ".vscode/extensions.json",
+        "hash": "5837262799529507717"
+      },
+      {
+        "file": "README.md",
+        "hash": "10146652028379690008"
+      },
+      {
+        "file": "components.json",
+        "hash": "15799805965570480772"
+      },
+      {
+        "file": "error.log",
+        "hash": "12442441809911133506"
+      },
+      {
+        "file": "eslint.config.mjs",
+        "hash": "2856764254797897161"
+      },
+      {
+        "file": "jest.config.ts",
+        "hash": "9882362695153092473"
+      },
+      {
+        "file": "jest.preset.js",
+        "hash": "7473220183190921152"
+      },
+      {
+        "file": "nx.json",
+        "hash": "11310997862923139086"
+      },
+      {
+        "file": "package.json",
+        "hash": "12695090345612438441"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "18100745748652666202"
+      },
+      {
+        "file": "tsconfig.json",
+        "hash": "9863330482755706958"
+      }
+    ],
+    "projectFileMap": {
+      "@smart-menu-workspace/web": [
+        {
+          "file": "apps/web/.swcrc",
+          "hash": "12069132719648077729"
+        },
+        {
+          "file": "apps/web/eslint.config.mjs",
+          "hash": "8791215012740833962"
+        },
+        {
+          "file": "apps/web/index.d.ts",
+          "hash": "17021007320214501298"
+        },
+        {
+          "file": "apps/web/jest.config.cts",
+          "hash": "18265326363674287952"
+        },
+        {
+          "file": "apps/web/next-env.d.ts",
+          "hash": "10934712840805312151"
+        },
+        {
+          "file": "apps/web/next.config.js",
+          "hash": "7869542326923865401"
+        },
+        {
+          "file": "apps/web/package.json",
+          "hash": "12495665559412630236"
+        },
+        {
+          "file": "apps/web/postcss.config.mjs",
+          "hash": "5899440749823482742"
+        },
+        {
+          "file": "apps/web/public/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/web/public/favicon.ico",
+          "hash": "9303420814833116677"
+        },
+        {
+          "file": "apps/web/specs/index.spec.tsx",
+          "hash": "10504349828076870530"
+        },
+        {
+          "file": "apps/web/src/app/[restaurantName]/dashboard/page.tsx",
+          "hash": "9090262119734060105",
+          "deps": [
+            "@smart-menu-workspace/shared-ui"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/[restaurantName]/layout.tsx",
+          "hash": "55011323060696730",
+          "deps": [
+            "@smart-menu-workspace/shared-ui"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/admin/dashboard/page.tsx",
+          "hash": "12002032062515003951",
+          "deps": [
+            "@smart-menu-workspace/shared-ui"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/admin/layout.tsx",
+          "hash": "6687038501512476177",
+          "deps": [
+            "@smart-menu-workspace/shared-ui"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/admin/restaurants/page.tsx",
+          "hash": "15452149471984656281",
+          "deps": [
+            "@smart-menu-workspace/shared-ui"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/admin/settings/page.tsx",
+          "hash": "18327589267407848552",
+          "deps": [
+            "@smart-menu-workspace/shared-ui"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/admin/subscriptions/page.tsx",
+          "hash": "18023868303077845660",
+          "deps": [
+            "@smart-menu-workspace/shared-ui"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/admin/templates/page.tsx",
+          "hash": "13865101082422618890",
+          "deps": [
+            "@smart-menu-workspace/shared-ui"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/api/hello/route.ts",
+          "hash": "12159998604013879547"
+        },
+        {
+          "file": "apps/web/src/app/global.css",
+          "hash": "7342967218670438395"
+        },
+        {
+          "file": "apps/web/src/app/layout.tsx",
+          "hash": "10760385828745439819"
+        },
+        {
+          "file": "apps/web/src/app/page.module.css",
+          "hash": "5708835840392938794"
+        },
+        {
+          "file": "apps/web/src/app/page.tsx",
+          "hash": "11791913558644963978"
+        },
+        {
+          "file": "apps/web/tsconfig.json",
+          "hash": "12756244429339544792"
+        },
+        {
+          "file": "apps/web/tsconfig.spec.json",
+          "hash": "1429076056856197248"
+        }
+      ],
+      "@smart-menu-workspace/web-e2e": [
+        {
+          "file": "apps/web-e2e/eslint.config.mjs",
+          "hash": "16243282764819368173"
+        },
+        {
+          "file": "apps/web-e2e/package.json",
+          "hash": "11932174338318289283"
+        },
+        {
+          "file": "apps/web-e2e/playwright.config.ts",
+          "hash": "15237999949079438498"
+        },
+        {
+          "file": "apps/web-e2e/src/example.spec.ts",
+          "hash": "1909365745453809229"
+        },
+        {
+          "file": "apps/web-e2e/tsconfig.json",
+          "hash": "7305593062393138781"
+        }
+      ],
+      "@smart-menu-workspace/shared-ui": [
+        {
+          "file": "libs/shared-ui/.babelrc",
+          "hash": "15003411175763814189"
+        },
+        {
+          "file": "libs/shared-ui/README.md",
+          "hash": "12775874696069976788"
+        },
+        {
+          "file": "libs/shared-ui/eslint.config.mjs",
+          "hash": "8222194537543456028"
+        },
+        {
+          "file": "libs/shared-ui/jest.config.cts",
+          "hash": "13682429476885821297"
+        },
+        {
+          "file": "libs/shared-ui/package.json",
+          "hash": "4407579598634688079"
+        },
+        {
+          "file": "libs/shared-ui/src/components/ActivityItem.tsx",
+          "hash": "17036776991970866417"
+        },
+        {
+          "file": "libs/shared-ui/src/components/AdminSidebar.tsx",
+          "hash": "7009424692600192607"
+        },
+        {
+          "file": "libs/shared-ui/src/components/DashboardLayout.tsx",
+          "hash": "18275405799574705229"
+        },
+        {
+          "file": "libs/shared-ui/src/components/Header.tsx",
+          "hash": "6118902516549203732"
+        },
+        {
+          "file": "libs/shared-ui/src/components/RestaurantSidebar.tsx",
+          "hash": "10892636574895036005"
+        },
+        {
+          "file": "libs/shared-ui/src/components/StatsCard.tsx",
+          "hash": "677439626650468797"
+        },
+        {
+          "file": "libs/shared-ui/src/index.ts",
+          "hash": "14319222095049139048"
+        },
+        {
+          "file": "libs/shared-ui/src/ui/avatar.tsx",
+          "hash": "11891365054154566423"
+        },
+        {
+          "file": "libs/shared-ui/src/ui/badge.tsx",
+          "hash": "8253895368709617335"
+        },
+        {
+          "file": "libs/shared-ui/src/ui/button.tsx",
+          "hash": "266995923124874653"
+        },
+        {
+          "file": "libs/shared-ui/src/ui/card.tsx",
+          "hash": "16719590469917739305"
+        },
+        {
+          "file": "libs/shared-ui/src/ui/dropdown-menu.tsx",
+          "hash": "3981219660716301399"
+        },
+        {
+          "file": "libs/shared-ui/src/ui/input.tsx",
+          "hash": "7474759491871718999"
+        },
+        {
+          "file": "libs/shared-ui/src/ui/separator.tsx",
+          "hash": "12326974650358375030"
+        },
+        {
+          "file": "libs/shared-ui/src/ui/table.tsx",
+          "hash": "10570507534243523467"
+        },
+        {
+          "file": "libs/shared-ui/src/utils.ts",
+          "hash": "16785587550365543190"
+        },
+        {
+          "file": "libs/shared-ui/tsconfig.json",
+          "hash": "2674039736604267299"
+        },
+        {
+          "file": "libs/shared-ui/tsconfig.lib.json",
+          "hash": "7935706194302282855"
+        },
+        {
+          "file": "libs/shared-ui/tsconfig.spec.json",
+          "hash": "14236108992651047539"
+        }
+      ]
+    }
+  },
+  "externalNodesHash": "3244421341483603138"
+}
